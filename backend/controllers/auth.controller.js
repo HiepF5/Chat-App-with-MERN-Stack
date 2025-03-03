@@ -2,32 +2,31 @@ import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/generateToken.js";
 export const login = async (req, res) => {
-    try {
-        const { username, password } = req.body;
-        if (!username || !password) {
-            return res.status(400).json({ message: "Please enter all fields" });
-        }
-        const user = await User.findOne({ username });
-        if (!user) {
-            return res.status(400).json({ message: "User does not exist" });
-        }
-        const isPasswordCorrect = await bcrypt.compare(password, user.password);
-        if (!isPasswordCorrect) {
-          return res.status(400).json({ message: "Invalid username or password" });
-        }
-        //Generate JWT token and send it in response
-        generateTokenAndSetCookie(user._id, res);
-        res.status(200).json({
-            _id: user._id,
-            fullName: user.fullName,
-            username: user.username,
-            profilePicture: user.profilePicture,
-        });
-    } catch (error) {
-        console.log("Error in login controller: ", error.message);
-        res.status(500).json({ message: "Something went wrong" });
-        
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).json({ message: "Please enter all fields" });
     }
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid username or password" });
+    }
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      return res.status(400).json({ message: "Invalid username or password" });
+    }
+    //Generate JWT token and send it in response
+    generateTokenAndSetCookie(user._id, res);
+    res.status(200).json({
+      _id: user._id,
+      fullName: user.fullName,
+      username: user.username,
+      profilePicture: user.profilePicture,
+    });
+  } catch (error) {
+    console.log("Error in login controller: ", error.message);
+    res.status(500).json({ message: "Something went wrong" });
+  }
 };
 export const logout = async (req, res) => {
   try {
@@ -36,7 +35,6 @@ export const logout = async (req, res) => {
   } catch (error) {
     console.log("Error in logout controller: ", error.message);
     res.status(500).json({ message: "Something went wrong" });
-    
   }
 };
 export const signup = async (req, res) => {
