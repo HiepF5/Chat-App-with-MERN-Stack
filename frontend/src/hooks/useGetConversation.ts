@@ -1,10 +1,11 @@
+import { IUser } from "@interface/user.interface";
 import api from "@lib/axios/axiosInterceptor";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const useGetConversation = () => {
     const [loading, setLoading] = useState(true);
-    const [conversations, setConversations] = useState([]);
+    const [conversations, setConversations] = useState<IUser[]>([]);
     useEffect(() => {
         const getConversations = async () => {
             setLoading(true);
