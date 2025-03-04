@@ -1,3 +1,4 @@
+import { useSocketContext } from "@context/SocketContext";
 import { IUser } from "@interface/user.interface";
 import useConversation from "@store/useConversation";
 
@@ -14,7 +15,8 @@ const Conversation: React.FC<ConversationProps> = ({
 }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
   const isSelected = selectedConversation?._id === conversation._id;
-  const isOnline = true;
+  const { onlineUsers } = useSocketContext();
+  const isOnline = onlineUsers?.includes(conversation._id);
 
   return (
     <>

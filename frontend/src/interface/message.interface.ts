@@ -7,3 +7,7 @@ export interface IMessage {
     updatedAt: string; // Tương tự như trên
     __v: number;
 }
+
+export interface IMessageShake extends IMessage {
+    shouldShake: boolean;
+}

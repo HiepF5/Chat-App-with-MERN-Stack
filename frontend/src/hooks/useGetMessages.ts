@@ -11,6 +11,7 @@ const useGetMessages = () => {
         const getMessages = async () => {
             setLoading(true);
             try {
+                console.log("useGetMessage chạy")
                 const res = await api.get(`/api/message/${selectedConversation?._id}`);
                 if (res.status === 200) {
                     setMessages(res.data);

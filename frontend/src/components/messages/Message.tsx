@@ -1,9 +1,9 @@
 import { useAuthContext } from "@context/AuthContext";
-import { IMessage } from "@interface/message.interface";
+import { IMessageShake } from "@interface/message.interface";
 import useConversation from "@store/useConversation";
 import { extractTime } from "@utils/extractTime";
 
-const Message = ({ message }: { message: IMessage }) => {
+const Message = ({ message }: { message: IMessageShake }) => {
   const { authUser } = useAuthContext();
   const { selectedConversation } = useConversation();
   const fromMe = message.senderId === authUser?._id;
@@ -14,8 +14,8 @@ const Message = ({ message }: { message: IMessage }) => {
     : selectedConversation?.profilePicture;
   const bubbleBgColor = fromMe ? "bg-blue-500" : "";
 
-  // const shakeClass = message.shouldShake ? "shake" : "";
-  const shakeClass = "";
+  const shakeClass = message.shouldShake ? "shake" : "";
+  // const shakeClass = "";
 
   return (
     <div className={`chat ${chatClassName}`}>
